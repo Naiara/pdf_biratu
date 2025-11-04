@@ -4,7 +4,7 @@ from PIL import Image
 import pytesseract
 import io
 import logging
-import os  # <-- FALTABA ESTE IMPORT
+import os  
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("image-rotator")
