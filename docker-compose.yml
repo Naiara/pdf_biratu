@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
   image-rotator:
     build: .
     ports:
-      - "8000:8081"
+      - "8081:8000"
     environment:
       - MAX_UPLOAD_SIZE=10485760
     restart: unless-stopped
