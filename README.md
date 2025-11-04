@@ -1,27 +1,58 @@
-# PDF Rotation Fixer (Docker + FastAPI)
+# Image Rotation Fixer
 
-This small service detects rotated pages in a PDF and returns a corrected PDF.
+Servicio FastAPI que detecta y corrige automáticamente la rotación de imágenes usando OCR.
 
-Features:
-- Uses Poppler (`pdftoppm`) to render PDF pages to images.
-- Uses Tesseract OCR to detect page orientation.
-- Uses PyPDF2 to rotate PDF pages and produce a new PDF.
+## Características
 
-Everything runs inside Docker. Minimal dependencies: Python, poppler-utils, tesseract.
+- Detecta orientación de texto en imágenes
+- Corrige automáticamente imágenes rotadas (90°, 180°, 270°)
+- Mantiene el formato original (JPG, PNG, etc.)
+- API REST simple
 
-How to build and run (PowerShell):
+## Requisitos
 
-```powershell
-# from repository root
-docker compose build
-docker compose up
+- Python 3.11+
+- Tesseract OCR
+
+## Instalación Local
+
+```bash
+pip install -r requirements.txt
 ```
 
-The service will be available at http://localhost:8000.
+## Ejecución Local
 
-Endpoint:
-- POST /fix_rotation (form file upload, field name `file`) -> returns fixed PDF or original if no rotation detected.
+```bash
+uvicorn app.main:app --reload
+```
 
-Notes and next steps:
-- This uses Tesseract OSD which may need language packs for best results. I included Spanish (`spa`).
-- For n8n integration, call the endpoint from your n8n workflow (in the same LAN) and pass the PDF file; mount a shared volume if you prefer.
+## Docker
+
+```bash
+docker-compose up --build
+```
+
+## API Endpoints
+
+### `POST /fix_rotation`
+
+Sube una imagen y recibe la versión corregida.
+
+**Ejemplo con curl:**
+
+```bash
+curl -X POST "http://localhost:8000/fix_rotation" \
+  -F "file=@imagen_torcida.jpg" \
+  --output imagen_corregida.jpg
+```
+
+**Headers de respuesta:**
+- `X-Rotation-Applied`: Grados de rotación aplicados
+
+### `GET /health`
+
+Verifica el estado del servicio.
+
+## Variables de Entorno
+
+- `MAX_UPLOAD_SIZE`: Tamaño máximo de archivo en bytes (default: 10MB)

@@ -1,5 +1,15 @@
-data/*
-debug_response_*.json
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
 .env
 *.log
+.DS_Store
+.vscode/
+.idea/
+data/*         
+*.pdf          
 
