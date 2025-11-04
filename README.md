@@ -38,21 +38,50 @@ docker-compose up --build
 
 Sube una imagen y recibe la versión corregida.
 
-**Ejemplo con curl:**
+**Ejemplo con curl (PowerShell):**
+
+```powershell
+curl.exe -X POST "http://localhost:8000/fix_rotation" -F "file=@data/froga_2.png" --output data/froga_2_fixed.png
+```
+
+**Ejemplo con curl (Bash):**
 
 ```bash
 curl -X POST "http://localhost:8000/fix_rotation" \
-  -F "file=@imagen_torcida.jpg" \
-  --output imagen_corregida.jpg
+  -F "file=@data/froga_2.png" \
+  --output data/froga_2_fixed.png
+```
+
+**Ver headers de respuesta:**
+
+```powershell
+curl.exe -X POST "http://localhost:8000/fix_rotation" -F "file=@data/froga_2.png" -i --output data/froga_2_fixed.png
 ```
 
 **Headers de respuesta:**
-- `X-Rotation-Applied`: Grados de rotación aplicados
+- `X-Rotation-Applied`: Grados de rotación aplicados (0, 90, 180, 270)
 
 ### `GET /health`
 
 Verifica el estado del servicio.
 
+```bash
+curl http://localhost:8000/health
+```
+
 ## Variables de Entorno
 
 - `MAX_UPLOAD_SIZE`: Tamaño máximo de archivo en bytes (default: 10MB)
+
+## Estructura del Proyecto
+
+```
+img_biratu/
+├── app/
+│   └── main.py          # Aplicación FastAPI
+├── data/                # Imágenes de prueba
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
