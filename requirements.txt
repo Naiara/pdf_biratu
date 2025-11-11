@@ -3,3 +3,6 @@ uvicorn
 python-multipart
 Pillow
 pytesseract
+opencv-python
+numpy
+deskew
